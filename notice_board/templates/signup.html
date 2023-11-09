@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Sign Up</h2>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        
+            {% for category, message in messages %}
+                {% if category == 'existed_id' %}
+                <script>
+                    alert("{{ message }}");
+                </script>
+                {% endif %}
+            {% endfor %}
+    {% endif %}
+{% endwith %}
+<form method="post" action="/signup">
+    <label for="name">username:</label>
+    <input type="text"  name="username" required>
+    <br>
+    <label for="id">Id:</label>
+    <input type ="text" name="userid" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password"  name="password" required>
+    <br>
+    <input type="submit" value="Sign Up">
+</form>
+{% endblock %}

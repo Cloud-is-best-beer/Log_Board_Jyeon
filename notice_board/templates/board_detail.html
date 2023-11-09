@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>게시물 상세보기</h2>
+<p>제목: {{ post[1] }}</p>
+<p><textarea cols="50" rows="20">{{ post[2] }}</textarea></p>
+<p>작성자:{{post[4]}} </p>
+<p>작성시간 : {{post[3]}}</p>
+{% endblock %}
