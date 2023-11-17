@@ -20,8 +20,11 @@ def signup():
         userid = request.form['userid']
         password = request.form['password']
         username = request.form['username']
+        password_check = request.form['password_check']
 
         password = hashing(password)
+        password_check = hashing(password_check)
+
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
 
@@ -31,11 +34,14 @@ def signup():
             conn.close()
             return redirect(url_for('signup'))
         else:
-            cursor.execute('INSERT INTO user (userid,password,username) VALUES (?,?,?)' ,(userid,password,username))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('login'))
-
+            if password == password_check:
+                cursor.execute('INSERT INTO user (userid,password,username) VALUES (?,?,?)' ,(userid,password,username))
+                conn.commit()
+                conn.close()
+                return redirect(url_for('login'))
+            else:
+                flash('패스워드가 일치하지 않습니다.',category='password_check')
+                return redirect(url_for('signup'))
 
 
 @app.route('/login',methods=['GET','POST'])
@@ -70,20 +76,20 @@ def login():
 
 @app.route('/board_list',methods=['GET','POST'])
 def board_list():
-
+    #page = request.args.get('page',1,type=int) # page당 10개의 글 목록을 보여줄거임.
     conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row 
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM board')
     lists = cursor.fetchall()
-    print(lists)
     cursor.close()
     conn.close()
     return render_template('board_list.html',lists = lists)
 
+
 @app.route('/board',methods=['GET','POST'])
 def board():
     if request.method == 'GET':
-        print(session)
         return render_template('board.html')
     
     else:
@@ -103,31 +109,67 @@ def board():
             flash('로그인이 필요합니다',category='need_login')
             return redirect(url_for('login'))
 
-@app.route('/board/<int:id>')
-def board_detail(id):
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM board WHERE id = ?', (id,))
-    post = cursor.fetchone()
-    print(post)
-    conn.close()
 
-    if post is None:
-        return "게시물이 존재하지 않습니다."
+@app.route('/board/<int:id>',methods=['GET','POST'])
+def board_detail(id):
+    if request.method =='GET':    
+        conn = sqlite3.connect('database.db')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM board WHERE id = ?', (id,))
+        post = cursor.fetchone()
+        conn.close()
+
+        if post is None:
+            return "게시물이 존재하지 않습니다."
     
+    else:
+        if 'delete' in request.form:
+            delete_board(id)
+            return redirect(url_for('index'))
+        
     return render_template('board_detail.html', post=post)
 
-    
+
+def delete_board(id):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM board WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+
+def edit_board():
+    pass
+
+@app.route('/mypage', methods=['GET','POST'])
+def mypage():
+    if request.method == 'GET':
+        if 'userid' in session:
+            userid = session['userid']
+            conn = sqlite3.connect('database.db')
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute('SELECT * FROM board WHERE userid = ?',(userid,))
+            my_info = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            
+            return render_template('mypage.html',my_info = my_info)
+        
+        else:
+            return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
-    print(session)
     session.pop('userid',None)
-    print(session)
     return redirect(url_for('index'))
+
 
 
 if __name__ =='__main__':
     init_db()
     app.run(debug=True)
     
+
+    #conn.row_factory = sqlite3.Row 이런식으로 하면
+    #딕셔너리 형태로 가져올 수 있음.

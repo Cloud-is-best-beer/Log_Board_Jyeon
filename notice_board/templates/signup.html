@@ -1,29 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Sign Up</h2>
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        
-            {% for category, message in messages %}
-                {% if category == 'existed_id' %}
-                <script>
-                    alert("{{ message }}");
-                </script>
-                {% endif %}
-            {% endfor %}
-    {% endif %}
-{% endwith %}
-<form method="post" action="/signup">
-    <label for="name">username:</label>
-    <input type="text"  name="username" required>
-    <br>
-    <label for="id">Id:</label>
-    <input type ="text" name="userid" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password"  name="password" required>
-    <br>
-    <input type="submit" value="Sign Up">
-</form>
+<div class="container">
+    <h2>Sign Up</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            
+                {% for category, message in messages %}
+                    {% if category == 'existed_id' or category == 'password_check'%}
+                    <script>
+                        alert("{{ message }}");
+                    </script>
+                    {% endif %}
+                {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form method="post" action="/signup" class="mb-3">
+        <div class="form-group">
+            <label for="name">username:</label>
+            <input type="text" class="form-control" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="id">Id:</label>
+            <input type ="text" class="form-control" name="userid" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" name="password" required>
+        </div>
+        <div class="form-group">
+            <label for="password_check">Password Check:</label>
+            <input type="password" class="form-control" name="password_check" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>    </form>
+</div>
 {% endblock %}
+
+<!-- 
+#login 바꿔야됨 -->

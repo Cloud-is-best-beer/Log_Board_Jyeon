@@ -1,27 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post" action="/login">
-    <label for="userid">UserId:</label>
-    <input type="text" id="userid" name="userid" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <input type="submit" value="Login">
-</form>
+<div class="container">
+    <h2>Login</h2>
+    <form method="post" action="/login" class="mb-3">
+        <div class="form-group">
+            <label for="userid">UserId:</label>
+            <input type="text" class="form-control" id="userid" name="userid" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            {% if category == 'login_fail' %}
-                <script>
-                    alert("{{ message }}");
-                </script>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'login_fail' %}
+                    <script>
+                        alert("{{ message }}");
+                    </script>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
 {% endblock %}

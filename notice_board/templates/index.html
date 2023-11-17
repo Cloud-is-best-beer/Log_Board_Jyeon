@@ -2,15 +2,13 @@
 
 {% block content %}
 
-<h2>게시판에 놀러오신걸 환영합니다.</h2>
-<ul>
-    {%if not session['userid']%}
-    <li><a href="/signup">signup</a></li>
-    <li><a href="/login">login</a></li>
-    {%endif%}
-    <li><a href="/board">board</a></li>
-    <li><a href="/board_list">board_list</a></li>
-    
-</ul>
+    <div class="container">
+        <h2>게시판에 놀러오신걸 환영합니다.</h2>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="/board" class="text-decoration-none">Board</a></li>
+            <li class="list-group-item"><a href="/board_list" class="text-decoration-none">Board List</a></li>
+        </ul>
+    </div>
+
 
 {% endblock %}

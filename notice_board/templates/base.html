@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}My App{% endblock %}</title>
+    <title>{% block title %}Notice Board{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </head>
 <body>
-    <div class="header">
-        <h1>Welcome to Notice Board</h1>
+    <!--네비게이션 바로 대체-->
+    <ul class="nav justify-content-end">
         {% if session['userid'] %}
-           id :  {{session['userid']}}
-           <a href="{{url_for('logout')}}">logout</a>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{url_for('mypage')}}">MyPage</a>
+        </li> 
+        <li class="nav-item">
+            <a class="nav-link active" href="{{url_for('logout')}}">Logout</a>
+        </li>
+        {% else%} 
+        <li class="nav-item">
+          <a class="nav-link active" href="{{url_for('signup')}}">SignUp</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('login')}}">Login</a>
+        </li>
         {% endif %}
+    </ul>
+         
+
+    <div class="header">
+        <h2><a href="/">Notice Board</a></h2>
+        
     </div>
     <div class="content">
         {% block content %}{% endblock %}

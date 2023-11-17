@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <h2>My Page</h2>
+
+    <ul class ="list-group">
+        {% for board in my_info %}
+        <li class="list-group-item">
+            <a href="/board/{{board['id']}}" class="text-decoration-none">{{board['title']}}</a> 
+        </li>
+        {% endfor %}
+    </ul>
+   
+</div>
+
+{% endblock %}

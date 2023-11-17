@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2> 게시판 목록</h2>
+<div class="container">
+    <h2>게시판 목록</h2>
 
-<ul>
-    {% for item in lists %}
-    <li>
-    <a href="{{ url_for('board_detail', id=item[0]) }}">{{ item[1] }}</a>    
-    </li>
-    {% endfor %}
-</ul>
-<form method="get" action="/board_list">
-
-</form>
+    <ul class="list-group">
+        {% for list in lists %}
+        <li class="list-group-item">
+            <a href="{{ url_for('board_detail', id=list['id']) }}" class="text-decoration-none">
+                {{ list['title'] }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
