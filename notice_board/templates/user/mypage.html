@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <h2>마이페이지</h2>
+
+    <ul class ="list-group">
+        {% for info in infos %}
+        <li class="list-group-item">
+            <a href="/board/board/{{info['id']}}" class="text-decoration-none">{{info['title']}}</a> 
+        </li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{{url_for('user.mypage')}}" class = "mt-3">
+        <button type="submit" class = "btn btn-danger">회원탈퇴</button>
+    </form>
+
+</div>
+
+{% endblock %}

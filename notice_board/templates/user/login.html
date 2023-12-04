@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="container">
-    <h2>Login</h2>
-    <form method="post" action="/login" class="mb-3">
+    <h2>로그인</h2>
+    <form method="post" action="{{url_for('user.login')}}" class="mb-3">
         <div class="form-group">
             <label for="userid">UserId:</label>
             <input type="text" class="form-control" id="userid" name="userid" required>

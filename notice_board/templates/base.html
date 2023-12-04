@@ -8,30 +8,34 @@
 <body>
     <!--네비게이션 바로 대체-->
     <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link active" href="/">
+                <i class="bi bi-postcard"></i>
+            </a>
+        </li>
         {% if session['userid'] %}
         <li class="nav-item">
-            <a class="nav-link active" href="{{url_for('mypage')}}">MyPage</a>
+            <a class="nav-link active" href="{{url_for('user.mypage')}}">마이페이지</a>
         </li> 
         <li class="nav-item">
-            <a class="nav-link active" href="{{url_for('logout')}}">Logout</a>
+            <a class="nav-link active" href="{{url_for('user.logout')}}">로그아웃</a>
         </li>
-        {% else%} 
+        {% else %} 
         <li class="nav-item">
-          <a class="nav-link active" href="{{url_for('signup')}}">SignUp</a>
+          <a class="nav-link active" href="{{url_for('user.signup')}}">회원가입</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('login')}}">Login</a>
+          <a class="nav-link" href="{{url_for('user.login')}}">로그인</a>
         </li>
         {% endif %}
     </ul>
          
 
     <div class="header">
-        <h2><a href="/">Notice Board</a></h2>
-        
+        <h2><a href="/">루키즈 게시판</a></h2>
     </div>
     <div class="content">
-        {% block content %}{% endblock %}
+        {%block content%} {% endblock %}
     </div>
     <div class="footer">
     </div>

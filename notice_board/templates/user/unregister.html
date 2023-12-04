@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>회원 탈퇴</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'password_check'%}
+                    <script>
+                        alert("{{ message }}");
+                    </script>
+                    {% endif %}
+                {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form method="post" action="{{ url_for('user.unregister') }}" class="mt-3">
+        <div class="mb-3">
+            <label for="password" class="form-label">비밀번호:</label>
+            <input type="password" class="form-control" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-danger" onclick="return confirm('정말로 회원을 탈퇴하시겠습니까?')">회원탈퇴</button>
+    </form>
+</div>
+{% endblock %}
+
+

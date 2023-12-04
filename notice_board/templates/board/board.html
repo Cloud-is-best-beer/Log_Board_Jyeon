@@ -4,16 +4,16 @@
 <div class="container">
     <h2>게시판 글쓰기</h2>
 
-    <form method="post" action="/board">
+    <form method="post" action="{{url_for('board.board')}}">
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" name="title" required>
         </div>
         <div class="mb-3">
-            <label for="body" class="form-label">Body</label>
+            <label for="body" class="form-label">내용</label>
             <textarea class="form-control" cols="50" rows="20" name="body"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+        <button type="submit" class="btn btn-primary" name="submit">저장</button>
     </form>
 </div>
 {% endblock %}

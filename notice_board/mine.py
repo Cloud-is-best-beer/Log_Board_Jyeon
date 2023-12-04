@@ -1,5 +1,6 @@
 import sqlite3
 import hashlib
+import re
 
 def init_db():
     conn = sqlite3.connect('database.db')
@@ -37,3 +38,10 @@ def hashing(password):
     hash.update(password.encode('utf-8'))
     password = hash.hexdigest()
     return password
+
+def val_password(password):
+    pattern = re.compile(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$')
+    if re.match(pattern,password):
+        return True
+    else:
+        return False

@@ -7,7 +7,7 @@
     <ul class="list-group">
         {% for list in lists %}
         <li class="list-group-item">
-            <a href="{{ url_for('board_detail', id=list['id']) }}" class="text-decoration-none">
+            <a href="{{ url_for('board.board_detail', id=list['id']) }}" class="text-decoration-none">
                 {{ list['title'] }}
             </a>
         </li>
